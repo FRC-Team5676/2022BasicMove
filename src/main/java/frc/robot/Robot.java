@@ -147,7 +147,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
 
     /* Drive Robot - Axis 0 & 1 (X & Y Left Joystick) */
-    double speed1 = 1 * controller_0.getRawAxis(2); /* negative is right */
+    double speed1 = -1 * controller_0.getRawAxis(2); /* negative is right */
     double speed2 = -1 * controller_0.getRawAxis(3); /* negative is forwardard */
 
     /* Controller Deadband 10% */
