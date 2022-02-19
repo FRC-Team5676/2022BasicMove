@@ -15,6 +15,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.AnalogInput;
 
@@ -49,7 +50,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    motor1.setInverted(true);
+    //motor1.setInverted(true);
 
     /*
      * m_myRobot = new DifferentialDrive(m_leftMotor, m_rightMotor);
@@ -137,10 +138,11 @@ public class Robot extends TimedRobot {
   private final MotorController motor0 = new PWMVictorSPX(0);
   private final MotorController motor1 = new PWMVictorSPX(1);
   private final MotorController motor2 = new PWMVictorSPX(2);
-  private final MotorController motor3 = new PWMSparkMax(3);
-  private final MotorController motor4 = new PWMSparkMax(4);
+  private final MotorController motor3 = new PWMVictorSPX(3);
+  private final MotorController motor4 = new PWMVictorSPX(4);
 
   /* Joysticks */
+  //private static Joystick ctrl0 = new Joystick(0);
   private static XboxController ctrl0 = new XboxController(0);
 
   /** This function is called periodically during operator control. */
@@ -155,16 +157,18 @@ public class Robot extends TimedRobot {
       reverse = 1;
     }
 
-    // Climbing arms
-    motor0.set(reverse * ctrl0.RightTrigger());
-    motor1.set(reverse * ctrl0.RightTrigger());
+    // Outter Climb
+    //motor0.set(reverse * ctrl0.getRawAxis(2));
+    //motor1.set(reverse * ctrl0.getRawAxis(2));
+    motor0.set(reverse * ctrl0.LeftTrigger());
+    motor1.set(reverse * ctrl0.LeftTrigger());
+
+    // Arm Extension
+    motor2.set(reverse * ctrl0.RightTrigger());
+    motor3.set(reverse * ctrl0.RightTrigger());
 
     // Arm Rotate
-    motor2.set(reverse * ctrl0.RightStickY());
-
-    // Outter Climb
-    motor3.set(reverse * ctrl0.LeftTrigger());
-    motor4.set(reverse * ctrl0.LeftTrigger());
+    motor4.set(reverse * ctrl0.RightStickY());
 
   }
 }
