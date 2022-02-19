@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //Basic imports, needed for essential robot funtions
 //*note*, this does NOT include drive encoders (import spark and other drive encoders seperately)
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -21,7 +20,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 
 //Movement Encoder Imports / motor controllers
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-//import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 
@@ -50,7 +49,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    motor2.setInverted(true);
+    motor1.setInverted(true);
 
     /*
      * m_myRobot = new DifferentialDrive(m_leftMotor, m_rightMotor);
@@ -135,32 +134,37 @@ public class Robot extends TimedRobot {
    */
 
   /* Drive Train Motors */
-  private final MotorController motor1 = new PWMVictorSPX(0);
-  private final MotorController motor2 = new PWMVictorSPX(1);
-  private final MotorController motor3 = new PWMVictorSPX(2);
+  private final MotorController motor0 = new PWMVictorSPX(0);
+  private final MotorController motor1 = new PWMVictorSPX(1);
+  private final MotorController motor2 = new PWMVictorSPX(2);
+  private final MotorController motor3 = new PWMSparkMax(3);
+  private final MotorController motor4 = new PWMSparkMax(4);
 
   /* Joysticks */
-  private static Joystick controller_0 = new Joystick(0);
+  private static XboxController ctrl0 = new XboxController(0);
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
 
-    /* Drive Robot - Axis 0 & 1 (X & Y Left Joystick) */
-    double speed1 = -1 * controller_0.getRawAxis(2); /* negative is right */
-    double speed2 = -1 * controller_0.getRawAxis(3); /* negative is forwardard */
-
-    /* Controller Deadband 10% */
-    if (Math.abs(speed2) < 0.10) {
-      speed2 = 0;
-    }
-    if (Math.abs(speed1) < 0.10) {
-      speed1 = 0;
+    // Reverse Button
+    int reverse;
+    if (ctrl0.ButtonA()) {
+      reverse = -1;
+    } else {
+      reverse = 1;
     }
 
-    motor1.set(speed1);
-    motor2.set(speed2);
+    // Climbing arms
+    motor0.set(reverse * ctrl0.RightTrigger());
+    motor1.set(reverse * ctrl0.RightTrigger());
 
+    // Arm Rotate
+    motor2.set(reverse * ctrl0.RightStickY());
+
+    // Outter Climb
+    motor3.set(reverse * ctrl0.LeftTrigger());
+    motor4.set(reverse * ctrl0.LeftTrigger());
 
   }
 }
