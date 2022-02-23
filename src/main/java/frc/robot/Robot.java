@@ -134,15 +134,17 @@ public class Robot extends TimedRobot {
    * private Joystick m_rightStick;
    */
 
-  /* Drive Train Motors */
+  /* Motors */
   private final MotorController motor0 = new PWMVictorSPX(0);
   private final MotorController motor1 = new PWMVictorSPX(1);
   private final MotorController motor2 = new PWMVictorSPX(2);
   private final MotorController motor3 = new PWMVictorSPX(3);
   private final MotorController motor4 = new PWMVictorSPX(4);
 
+  /* Config Factory Defaults */
+  //motor0.configFactoryDefault();
+
   /* Joysticks */
-  //private static Joystick ctrl0 = new Joystick(0);
   private static XboxController ctrl0 = new XboxController(0);
 
   /** This function is called periodically during operator control. */
@@ -158,8 +160,6 @@ public class Robot extends TimedRobot {
     }
 
     // Outter Climb
-    //motor0.set(reverse * ctrl0.getRawAxis(2));
-    //motor1.set(reverse * ctrl0.getRawAxis(2));
     motor0.set(reverse * ctrl0.LeftTrigger());
     motor1.set(reverse * ctrl0.LeftTrigger());
 
