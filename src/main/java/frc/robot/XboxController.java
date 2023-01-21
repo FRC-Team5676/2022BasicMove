@@ -32,12 +32,12 @@ public class XboxController {
         return _joystick.getRawButton(4);
     }
 
-    public boolean BumperLeft() {
+    public boolean LeftBumper() {
         // 5
         return _joystick.getRawButton(5);
     }
 
-    public boolean BumperRight() {
+    public boolean RightBumper() {
         // 6
         return _joystick.getRawButton(6);
     }
@@ -92,11 +92,11 @@ public class XboxController {
         return GetPositionUsingDeadBand(_joystick.getRawAxis(5));
     }
 
-    public boolean RumbleLeft() {
+    public boolean LeftRumble() {
         return false;
     }
 
-    public boolean RumbleRight() {
+    public boolean RightRumble() {
         return false;
     }
 

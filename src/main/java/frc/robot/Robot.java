@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
+import edu.wpi.first.wpilibj.motorcontrol.PWMTalonFX;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -140,6 +141,7 @@ public class Robot extends TimedRobot {
   private final MotorController motor2 = new PWMVictorSPX(2);
   private final MotorController motor3 = new PWMVictorSPX(3);
   private final MotorController motor4 = new PWMVictorSPX(4);
+  private final MotorController motor5 = new PWMTalonFX(5);
 
   /* Config Factory Defaults */
   //motor0.configFactoryDefault();
@@ -159,16 +161,9 @@ public class Robot extends TimedRobot {
       reverse = 1;
     }
 
-    // Outter Climb
-    motor0.set(reverse * ctrl0.LeftTrigger());
-    motor1.set(reverse * ctrl0.LeftTrigger());
-
-    // Arm Extension
-    motor2.set(reverse * ctrl0.RightTrigger());
-    motor3.set(reverse * ctrl0.RightTrigger());
-
-    // Arm Rotate
-    motor4.set(reverse * ctrl0.RightStickY());
+    // Falcon Motor
+    motor5.set(ctrl0.LeftTrigger());
+    motor5.set(-1 * ctrl0.RightTrigger());
 
   }
 }
