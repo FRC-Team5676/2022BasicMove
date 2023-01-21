@@ -143,6 +143,8 @@ public class Robot extends TimedRobot {
   private final MotorController motor4 = new PWMVictorSPX(4);
   private final MotorController motor5 = new PWMTalonFX(5);
 
+  private int reverse = -1;
+
   /* Config Factory Defaults */
   //motor0.configFactoryDefault();
 
@@ -154,16 +156,13 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
 
     // Reverse Button
-    int reverse;
     if (ctrl0.ButtonA()) {
-      reverse = -1;
-    } else {
-      reverse = 1;
+      reverse = -1 * reverse;
     }
 
     // Falcon Motor
-    motor5.set(ctrl0.LeftTrigger());
-    motor5.set(-1 * ctrl0.RightTrigger());
+    motor5.set(reverse * ctrl0.LeftTrigger());
+    motor5.set(-1 * reverse * ctrl0.RightTrigger());
 
   }
 }
